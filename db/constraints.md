@@ -166,3 +166,14 @@
 В `review` используется пара `entity_type` и `entity_id`, потому что
 отзыв может относиться к разным типам объектов (BR-9.1). Проверка такой
 ссылки выполняется триггером.
+
+## Дополнительные проверки через триггеры
+
+| Что проверяется | Как реализовано | BR |
+|---|---|---|
+| В заказе должна быть хотя бы одна позиция | Отложенные триггеры `trg_order_has_position` и `trg_order_structure_has_position`, функция `check_order_has_position()` | BR-7.14 |
+| Блюдо в заказе должно относиться к ресторану заказа | Триггер `trg_check_order_product_restaurant`, функция `check_order_product_restaurant()` | BR-7.3 |
+| Сумма попытки оплаты должна совпадать с общей суммой заказа | Триггеры `trg_check_payment_amount` и `trg_check_order_payment_amount`, функция `check_payment_amount()` | BR-8.4 |
+| Объект отзыва должен соответствовать типу и заказу | Триггер `trg_check_review_target`, функция `check_review_target()` | BR-9.1, BR-9.2 |
+| Клиент отзыва должен совпадать с клиентом заказа | Триггер `trg_check_review_client`, функция `check_review_client()` | BR-9.2 |
+| Статус оплаты заказа пересчитывается по попыткам оплаты | Триггер `trg_update_order_pay_status`, функции `recalculate_order_pay_status()` и `update_order_pay_status()` | BR-7.8, BR-7.9, BR-8.7 |
