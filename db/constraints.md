@@ -55,8 +55,8 @@
 заказа.
 
 Связь отзыва с клиентом вынесена в отдельную таблицу `review_client`. В
-ней `review_id` --- первичный и внешний ключ на `review`, а `client_id`
---- внешний ключ на `client`. Триггер `trg_check_review_client`
+ней `review_id` - первичный и внешний ключ на `review`, а `client_id`
+- внешний ключ на `client`. Триггер `trg_check_review_client`
 проверяет, что клиент отзыва совпадает с клиентом заказа (BR-9.2).
 
 Ограничение `UNIQUE(order_id, entity_type, entity_id)` не позволяет
