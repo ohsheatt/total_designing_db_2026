@@ -546,37 +546,3 @@ END;
 $$;
 
 
-CALL isakov_food.insert_test_data(100);
-
-SELECT
-    p.product_id,
-    p.product_name,
-    COUNT(r.review_id) AS review_count,
-    AVG(r.rating) AS average_rating,
-    p.rating AS saved_rating
-FROM isakov_food.product p
-LEFT JOIN isakov_food.review r
-    ON r.entity_id = p.product_id
-   AND r.entity_type = 'блюдо'
-GROUP BY p.product_id, p.product_name, p.rating
-ORDER BY review_count DESC;
-
-
-SELECT COUNT(*) AS products_without_reviews
-FROM isakov_food.product p
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM isakov_food.review r
-    WHERE r.entity_id = p.product_id
-      AND r.entity_type = 'блюдо'
-);
-
-SELECT COUNT(*) AS products_without_reviews_with_rating
-FROM isakov_food.product p
-WHERE NOT EXISTS (
-    SELECT 1
-    FROM isakov_food.review r
-    WHERE r.entity_id = p.product_id
-      AND r.entity_type = 'блюдо'
-)
-AND p.rating IS NOT NULL;
